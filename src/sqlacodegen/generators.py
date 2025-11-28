@@ -229,6 +229,10 @@ class TablesGenerator(CodeGenerator):
                 self.add_import(column.type.astext_type)
         elif isinstance(column.type, DOMAIN):
             self.add_import(column.type.data_type.__class__)
+        # Collect imports for sub item types of structured types
+        if hasattr(column.type, 'get_sub_item_types'):
+            for type_ in column.type.get_sub_item_types():
+                self.add_import(type_)
 
         if column.default:
             self.add_import(column.default)
@@ -474,6 +478,9 @@ class TablesGenerator(CodeGenerator):
             column.index = True
             kwarg.append("index")
             kwargs["index"] = True
+
+        if column.autoincrement:
+            kwargs["autoincrement"] = column.autoincrement
 
         if isinstance(column.server_default, DefaultClause):
             kwargs["server_default"] = render_callable(

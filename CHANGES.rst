@@ -7,6 +7,8 @@ Version history
 - Fix Postgres ``DOMAIN`` adaptation regression introduced in SQLAlchemy 2.0.42 (PR by @sheinbergon)
 - Support disabling special naming logic for single column many-to-one and one-to-one relationships
   (PR by @Henkhogan, revised by @sheinbergon)
+- Render the ``autoincrement`` column option if it's ``True``. (PR by @jaogoy)
+- Render sub item types of structured types like ``ARRAY``, ``MAP`` and ``STRUCT`` in imports if they have ``get_sub_item_types`` method. (PR by @jaogoy)
 
 **3.1.1**
 
